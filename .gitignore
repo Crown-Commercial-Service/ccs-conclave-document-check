@@ -25,3 +25,12 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore rubymine files
+.idea/*
+
+# Ignore public uploads
+/public/uploads/*
+
+# Ignore sidekiq file
+dump.rdb
