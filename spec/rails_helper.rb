@@ -5,7 +5,6 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
-require 'govuk_sidekiq/testing'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -66,4 +65,12 @@ RSpec.configure do |config|
 
   # Factorybot
   config.include FactoryBot::Syntax::Methods
+
+  # delete test files
+  config.after(:suite) do
+    # Get rid of the linked images
+    if Rails.env.test?
+      FileUtils.rm_rf(Rails.root.join('public','uploads','test'))
+    end
+  end
 end
