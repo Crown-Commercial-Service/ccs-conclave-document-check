@@ -1,0 +1,15 @@
+---
+applications:
+  - name: ccs-conclave-document-check
+    sidecars:
+    - name: sidekiq
+      process_types: [ 'worker' ]
+      command: bundle exec sidekiq -C ./config/sidekiq.yml
+      memory: 256M
+    services:
+      - ccs-conclave-document-upload-pg-service
+      - ccs-conclave-document-upload-s3-service
+      - ccs-conclave-document-upload-redis-service
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack.git

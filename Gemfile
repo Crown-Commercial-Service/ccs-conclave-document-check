@@ -28,10 +28,8 @@ gem 'i18n-tasks', '~> 0.9.31'
 # CLAMAV scanner
 gem 'clamby'
 
-# Sidekiq
-# gem 'sidekiq', '~> 6.1.2'
-# Sidekiq with GOVUK configuration
-gem 'govuk_sidekiq', '~> 4.0.0'
+# Sidekiq - using an older version that works with redis v3.2.6
+gem 'sidekiq', '~> 5.0.0.rc1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
