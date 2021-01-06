@@ -13,3 +13,4 @@ applications:
     memory: 256M
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack.git
+      - https://github.com/iceraluk/clamav-buildpack.git
