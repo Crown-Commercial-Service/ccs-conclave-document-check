@@ -12,5 +12,6 @@ applications:
       - ccs-conclave-document-upload-redis-service
     memory: 256M
     buildpacks:
-      - https://github.com/cloudfoundry/ruby-buildpack.git
+      - https://github.com/iceraluk/document-upload-buildpack-apt.git
       - https://github.com/iceraluk/clamav-buildpack.git
+      - https://github.com/cloudfoundry/ruby-buildpack.git
