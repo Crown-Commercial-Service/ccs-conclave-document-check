@@ -11,7 +11,7 @@ class UncheckedDocumentsController < ApplicationController
       VirusScanningWorker.perform_async(unchecked_document.id)
       render json: unchecked_document.document.to_json, status: :ok
     else
-      render status: :not_found, message: 'Document could not be found'
+      render status: :not_found
     end
   end
 
