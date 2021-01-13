@@ -8,7 +8,7 @@ applications:
       memory: 256M
     services:
       - ccs-conclave-document-upload-pg-service
-      - ccs-conclave-document-upload-s3-service
+      - ccs-conclave-document-upload-s3-service-public
       - ccs-conclave-document-upload-redis-service
     memory: 256M
     buildpacks:
