@@ -1,6 +1,6 @@
 FROM ruby:2.7.2-alpine
 
-ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata bash clamav clamav-daemon rsyslog wget clamav-libunrar
+ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata bash clamav clamav-daemon
 
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES
