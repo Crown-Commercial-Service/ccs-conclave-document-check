@@ -12,6 +12,7 @@ class VirusScanner
   end
 
   def scan
+    return unless @document.state == 'processing'
     log_safe if @document.valid?
   rescue Clamby::FileNotFound => e
     log_missing(e.message)

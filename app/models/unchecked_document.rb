@@ -6,6 +6,6 @@ class UncheckedDocument < ApplicationRecord
   mount_uploader :document_file, DocumentFileUploader
 
   def run_virus_scan
-    VirusScanner.new(id).scan
+    VirusScanner.new(id).scan if document_file.file.exists?
   end
 end
