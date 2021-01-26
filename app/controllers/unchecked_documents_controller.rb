@@ -8,10 +8,10 @@ class UncheckedDocumentsController < ApplicationController
     unchecked_document = UncheckedDocument.find_by_id(unchecked_document_params[:unchecked_document_id])
 
     if unchecked_document && unchecked_document.document
-      VirusScanningWorker.perform_async(unchecked_document.id)
+      VirusScanningWorker.perform_async(unchecked_document.id) if unchecked_document.document_file.file.try(:exists?)
       render json: unchecked_document.document.to_json, status: :ok
     else
-      render status: :not_found, message: 'Document could not be found'
+      render status: :not_found
     end
   end
 

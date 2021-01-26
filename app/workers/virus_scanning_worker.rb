@@ -1,8 +1,8 @@
 class VirusScanningWorker
   include Sidekiq::Worker
+  sidekiq_options :retry => 5, :dead => false
 
   def perform(unchecked_document_id)
-    unchecked_document = UncheckedDocument.find_by_id(unchecked_document_id)
-    unchecked_document.run_virus_scan
+    UncheckedDocument.find(unchecked_document_id).run_virus_scan
   end
 end
