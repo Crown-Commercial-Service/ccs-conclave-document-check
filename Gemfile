@@ -16,22 +16,18 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
-# File uploader
-gem 'carrierwave', '~> 2.0'
-
 # for S3 storage of files
-gem 'carrierwave-aws', '~> 1.5.0'
+gem 'carrierwave-aws', '~> 1.3.0'
 
 # Helps you manage translations
 gem 'i18n-tasks', '~> 0.9.31'
 
-# CLAMAV scanner
-gem 'clamby'
+# for clamav
+gem 'ratonvirus', '>= 0.1.1'
+gem 'ratonvirus-clamby', '>= 0.1.0'
 
-# Sidekiq
-# gem 'sidekiq', '~> 6.1.2'
-# Sidekiq with GOVUK configuration
-gem 'govuk_sidekiq', '~> 4.0.0'
+# Sidekiq - using an older version that works with redis v3.2.6
+gem 'sidekiq', '~> 5.0.0.rc1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -57,4 +53,5 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem "webmock"
+  gem 'rspec-sidekiq'
 end
