@@ -30,97 +30,143 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     context 'when unsafe' do
-      before do
-        @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
-        allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
-        @unchecked_document.run_virus_scan
-      rescue Clamby::VirusDetected
-        @unchecked_document.reload
-        @unchecked_document.document.reload
+      context 'when the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
+        end
+
+        it 'raises exception' do
+          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::VirusDetected)
+        end
       end
 
-      it 'raises exception' do
-        expect{@unchecked_document.run_virus_scan}.to raise_error(Clamby::VirusDetected)
+      context 'after the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
+          @unchecked_document.run_virus_scan
+        rescue Clamby::VirusDetected
+          @unchecked_document.reload
+          @unchecked_document.document.reload
+        end
+
+        it 'changes document state to unsafe' do
+          expect(@unchecked_document.document.state).to eq 'unsafe'
+        end
+
+        it 'does not save the file onto the document record' do
+          expect(@unchecked_document.document.document_file.file.present?).to eq(false)
+        end
+
+        it 'removes the file' do
+          expect(@unchecked_document.document_file.file.present?).to eq(false)
+        end
+
+        it 'updates document clamav_message' do
+          expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        end
       end
 
-      it 'changes document state to unsafe' do
-        expect(@unchecked_document.document.state).to eq 'unsafe'
-      end
+      context 'when the scan has already ran once' do
+        let(:unchecked_document) { create(:unchecked_document, document_file: nil, document: create(:document, state: 'unsafe', clamav_message: 'Virus found.'))}
 
-      it 'does not save the file onto the document record' do
-        expect(@unchecked_document.document.document_file.file.present?).to eq(false)
-      end
+        before do
+          unchecked_document.run_virus_scan
+        end
 
-      it 'removes the file' do
-        expect(@unchecked_document.document_file.file.present?).to eq(false)
-      end
+        it 'does not change the document state' do
+          expect(unchecked_document.document.state).to eq 'unsafe'
+        end
 
-      it 'updates document clamav_message' do
-        expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        it 'does not change the document state' do
+          expect(unchecked_document.document.clamav_message).not_to be_nil
+        end
       end
     end
 
     context 'when file missing' do
-      before do
-        @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
-        allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
-        @unchecked_document.run_virus_scan
-      rescue Clamby::FileNotFound
-        @unchecked_document.reload
-        @unchecked_document.document.reload
+      context 'when the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
+        end
+
+        it 'raises exception' do
+          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::FileNotFound)
+        end
       end
 
-      it 'raises exception' do
-        expect{@unchecked_document.run_virus_scan}.to raise_error(Clamby::FileNotFound)
-      end
+      context 'after the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
+          @unchecked_document.run_virus_scan
+        rescue Clamby::FileNotFound
+          @unchecked_document.reload
+          @unchecked_document.document.reload
+        end
 
-      it 'changes document state to unprocessed' do
-        expect(@unchecked_document.document.state).to eq 'unprocessed'
-      end
+        it 'changes document state to unprocessed' do
+          expect(@unchecked_document.document.state).to eq 'unprocessed'
+        end
 
-      it 'does not save the file onto the document record' do
-        expect(@unchecked_document.document.document_file.file.present?).to eq(false)
-      end
+        it 'does not save the file onto the document record' do
+          expect(@unchecked_document.document.document_file.file.present?).to eq(false)
+        end
 
-      it 'removes the file' do
-        expect(@unchecked_document.document_file.file.present?).to eq(true)
-      end
+        it 'removes the file' do
+          expect(@unchecked_document.document_file.file.present?).to eq(true)
+        end
 
-      it 'updates document clamav_message' do
-        expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        it 'updates document clamav_message' do
+          expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        end
       end
     end
 
     context 'when clamscan missing' do
-      before do
-        @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
-        allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
-        @unchecked_document.run_virus_scan
-      rescue Clamby::ClamscanMissing
-        @unchecked_document.reload
-        @unchecked_document.document.reload
+      context 'when the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
+        end
+
+        it 'raises exception' do
+          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::ClamscanMissing)
+        end
       end
 
-      it 'raises exception' do
-        expect{@unchecked_document.run_virus_scan}.to raise_error(Clamby::ClamscanMissing)
-      end
+      context 'after the scan runs' do
+        before do
+          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
+          @unchecked_document.run_virus_scan
+        rescue Clamby::ClamscanMissing
+          @unchecked_document.reload
+          @unchecked_document.document.reload
+        end
 
-      it 'changes document state to unprocessed' do
-        expect(@unchecked_document.document.state).to eq 'unprocessed'
-      end
+        it 'changes document state to unprocessed' do
+          expect(@unchecked_document.document.state).to eq 'unprocessed'
+        end
 
-      it 'does not save the file onto the document record' do
-        expect(@unchecked_document.document.document_file.file.present?).to eq(false)
-      end
+        it 'does not save the file onto the document record' do
+          expect(@unchecked_document.document.document_file.file.present?).to eq(false)
+        end
 
-      it 'removes the file' do
-        expect(@unchecked_document.document_file.file.present?).to eq(true)
-      end
+        it 'removes the file' do
+          expect(@unchecked_document.document_file.file.present?).to eq(true)
+        end
 
-      it 'updates document clamav_message' do
-        expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        it 'updates document clamav_message' do
+          expect(@unchecked_document.document.clamav_message.blank?).to eq(false)
+        end
       end
     end
-  end
 
+    context 'when the document has already been processed' do
+
+    end
+  end
 end
