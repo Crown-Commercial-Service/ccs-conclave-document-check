@@ -29,6 +29,9 @@ gem 'ratonvirus-clamby', '>= 0.1.0'
 # Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 5.0.0.rc1'
 
+# Exception tracking
+gem 'rollbar'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
