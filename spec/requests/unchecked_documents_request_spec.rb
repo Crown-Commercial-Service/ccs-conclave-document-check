@@ -1,13 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe "UncheckedDocuments", type: :request do
+RSpec.describe 'UncheckedDocuments', type: :request do
   let(:client) { create(:client, source_app: 'doc_upload') }
   let(:unchecked_document) { create(:unchecked_document, client: client) }
 
-  let(:headers) {{
-    "ACCEPT" => "application/json",
-    "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app, client.api_key)
-  }}
+  let(:headers) do
+    {
+      'ACCEPT' => 'application/json',
+      'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
+                                                                                             client.api_key)
+    }
+  end
 
   describe 'check' do
     context 'when success' do

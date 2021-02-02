@@ -1,6 +1,6 @@
 class VirusScanner
   def initialize(unchecked_document_id)
-    @unchecked_document = UncheckedDocument.find_by_id(unchecked_document_id)
+    @unchecked_document = UncheckedDocument.find_by(id: unchecked_document_id)
     @document = @unchecked_document.document
     if Rails.env.test? || Rails.env.development?
       # serve file from local storage
@@ -13,6 +13,7 @@ class VirusScanner
 
   def scan
     return unless @document.state == 'processing'
+
     log_safe if @document.valid?
   rescue Clamby::FileNotFound => e
     log_missing(e.message)
