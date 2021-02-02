@@ -10,14 +10,14 @@ else
     config.aws_acl    = 'private'
 
     config.aws_attributes = -> { {
-      expires: 3.months.from_now.httpdate,
-      cache_control: 'max-age=7884000'
+      :expires => 3.months.from_now.httpdate,
+      :cache_control => 'max-age=7884000'
     } }
 
     config.aws_credentials = {
-      region: JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_region'],
-      access_key_id: JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_access_key_id'],
-      secret_access_key: JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_secret_access_key']
+      :region => JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_region'],
+      :access_key_id => JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_access_key_id'],
+      :secret_access_key => JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_secret_access_key']
     }
   end
 end
