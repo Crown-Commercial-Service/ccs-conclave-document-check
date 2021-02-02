@@ -34,3 +34,6 @@
 
 # Ignore sidekiq file
 dump.rdb
+
+# Ignore test artifacts
+coverage

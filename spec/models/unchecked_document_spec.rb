@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe UncheckedDocument, type: :model do
   describe 'run_virus_scan' do
-    let(:unchecked_document) { create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf')) }
+    let(:unchecked_document) do
+      create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+    end
 
     context 'when safe' do
       before do
@@ -32,18 +34,20 @@ RSpec.describe UncheckedDocument, type: :model do
     context 'when unsafe' do
       context 'when the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
         end
 
         it 'raises exception' do
-          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::VirusDetected)
+          expect { @unchecked_document.run_virus_scan }.to raise_error(Clamby::VirusDetected)
         end
       end
 
       context 'after the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
           @unchecked_document.run_virus_scan
         rescue Clamby::VirusDetected
@@ -69,7 +73,10 @@ RSpec.describe UncheckedDocument, type: :model do
       end
 
       context 'when the scan has already ran once' do
-        let(:unchecked_document) { create(:unchecked_document, document_file: nil, document: create(:document, state: 'unsafe', clamav_message: 'Virus found.'))}
+        let(:unchecked_document) do
+          create(:unchecked_document, document_file: nil,
+                                      document: create(:document, state: 'unsafe', clamav_message: 'Virus found.'))
+        end
 
         before do
           unchecked_document.run_virus_scan
@@ -88,18 +95,20 @@ RSpec.describe UncheckedDocument, type: :model do
     context 'when file missing' do
       context 'when the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
         end
 
         it 'raises exception' do
-          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::FileNotFound)
+          expect { @unchecked_document.run_virus_scan }.to raise_error(Clamby::FileNotFound)
         end
       end
 
       context 'after the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
           @unchecked_document.run_virus_scan
         rescue Clamby::FileNotFound
@@ -128,18 +137,20 @@ RSpec.describe UncheckedDocument, type: :model do
     context 'when clamscan missing' do
       context 'when the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
         end
 
         it 'raises exception' do
-          expect{ @unchecked_document.run_virus_scan}.to raise_error(Clamby::ClamscanMissing)
+          expect { @unchecked_document.run_virus_scan }.to raise_error(Clamby::ClamscanMissing)
         end
       end
 
       context 'after the scan runs' do
         before do
-          @unchecked_document = create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+          @unchecked_document = create(:unchecked_document,
+                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
           @unchecked_document.run_virus_scan
         rescue Clamby::ClamscanMissing
@@ -166,7 +177,6 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     context 'when the document has already been processed' do
-
     end
   end
 end
