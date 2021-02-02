@@ -30,7 +30,10 @@ gem 'ratonvirus-clamby', '>= 0.1.0'
 gem 'sidekiq', '~> 5.0.0.rc1'
 
 # Exception tracking
-gem 'rollbar'
+gem 'rollbar', '~> 3.1.1'
+
+# Environment variables management
+gem 'vault', '~> 0.15.0'
 
 # static code analyzer
 gem 'rubocop', require: false
