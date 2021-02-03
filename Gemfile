@@ -65,4 +65,5 @@ group :test do
   gem 'webmock'
   gem 'rspec-sidekiq'
   gem 'simplecov', '0.20', require: false
+  gem 'climate_control'
 end
