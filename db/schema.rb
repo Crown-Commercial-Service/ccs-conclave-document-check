@@ -10,37 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_08_133417) do
+ActiveRecord::Schema.define(:version => 2020_12_08_133417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "source_app", limit: 20
-    t.string "api_key", limit: 255
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "clients", :id => :uuid, :default => -> { "gen_random_uuid()" }, :force => :cascade do |t|
+    t.string "source_app", :limit => 20
+    t.string "api_key", :limit => 255
+    t.datetime "created_at", :precision => 6, :null => false
+    t.datetime "updated_at", :precision => 6, :null => false
+    t.index ["api_key"], name: "index_clients_on_api_key", unique: true
+    t.index ["source_app"], name: "index_clients_on_source_app", unique: true
   end
 
-  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "source_app", limit: 20
-    t.string "state", limit: 20
-    t.string "clamav_message", limit: 255
-    t.string "document_file", limit: 255
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "documents", :id => :uuid, :default => -> { "gen_random_uuid()" }, :force => :cascade do |t|
+    t.string "source_app", :limit => 20
+    t.string "state", :limit => 20
+    t.string "clamav_message", :limit => 255
+    t.string "document_file", :limit => 255
+    t.datetime "created_at", :precision => 6, :null => false
+    t.datetime "updated_at", :precision => 6, :null => false
   end
 
-  create_table "unchecked_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "document_id", null: false
-    t.string "document_file", limit: 255
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.uuid "client_id", null: false
-    t.index ["client_id"], name: "index_unchecked_documents_on_client_id"
-    t.index ["document_id"], name: "index_unchecked_documents_on_document_id"
+  create_table "unchecked_documents", :id => :uuid, :default => -> { "gen_random_uuid()" }, :force => :cascade do |t|
+    t.uuid "document_id", :null => false
+    t.string "document_file", :limit => 255
+    t.datetime "created_at", :precision => 6, :null => false
+    t.datetime "updated_at", :precision => 6, :null => false
+    t.uuid "client_id", :null => false
+    t.index ["client_id"], :name => "index_unchecked_documents_on_client_id"
+    t.index ["document_id"], :name => "index_unchecked_documents_on_document_id"
   end
 
   add_foreign_key "unchecked_documents", "clients"
