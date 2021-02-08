@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe UncheckedDocument, type: :model do
   describe 'run_virus_scan' do
+    let(:mime_type) { 'text/pdf' }
+    let(:file_name) { 'test_pdf.pdf' }
     let(:unchecked_document) do
-      create(:unchecked_document, document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+      create(:unchecked_document, document_file: fixture_file_upload(file_name, mime_type))
     end
 
     context 'when safe' do
@@ -14,20 +16,171 @@ RSpec.describe UncheckedDocument, type: :model do
         unchecked_document.document.reload
       end
 
-      it 'changes document state to safe' do
-        expect(unchecked_document.document.state).to eq 'safe'
+      context 'when file is pdf' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdf.pdf' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
       end
 
-      it 'saves the file onto the document record' do
-        expect(unchecked_document.document.document_file.file.present?).to eq(true)
+      context 'when file is docx' do
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }
+        let(:file_name) { 'test_docx.docx' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
       end
 
-      it 'removes the file' do
-        expect(unchecked_document.document_file.present?).to eq(false)
+      context 'when file is csv' do
+        let(:mime_type) { 'text/csv' }
+        let(:file_name) { 'test_csv.csv' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
       end
 
-      it 'does not update document clamav_message' do
-        expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+      context 'when file is xlsx' do
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
+        let(:file_name) { 'test_docx.docx' }
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is odt' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.text' }
+        let(:file_name) { 'test_odt.odt' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is ods' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.spreadsheet' }
+        let(:file_name) { 'test_ods.ods' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is odp' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.presentation' }
+        let(:file_name) { 'test_odp.odp' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is odg' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.graphics' }
+        let(:file_name) { 'test_odg.odg' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
       end
     end
 
