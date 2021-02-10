@@ -5,7 +5,7 @@ module OldFilesRemovable
     scope :older_than_3_months, -> { where('created_at >= ?', 3.months.ago.to_date) }
 
     def self.remove_old_files
-      self.older_than_3_months.each do |document|
+      older_than_3_months.each do |document|
         document.remove_document_file!
         document.save
       end
