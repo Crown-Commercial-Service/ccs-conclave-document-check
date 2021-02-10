@@ -29,6 +29,8 @@ gem 'ratonvirus-clamby', '>= 0.1.0'
 # Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 5.0.0.rc1'
 
+gem 'sidekiq-scheduler', '~> 3.0.1'
+
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
 

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :client do
-    source_app { 'my_app' }
+    sequence(:source_app) { |n| "my_app#{n}" }
     api_key { 'RbZHfHtD1h9XZvs4fGPJUgtt' }
   end
 end
