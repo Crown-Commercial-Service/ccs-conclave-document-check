@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Document, type: :request do
-  let(:documents_older_than_3_months) { 3.times.map { create(:document, created_at: 3.months.ago) } }
-  let(:documents_newer_than_3_months) { 4.times.map { create(:document, created_at: 3.months.ago - 1.day) } }
+  let(:documents_older_than_3_months) { 3.times.map { create(:document, created_at: 3.months.ago.to_date - 1.day) } }
+  let(:documents_newer_than_3_months) { 4.times.map { create(:document, created_at: 3.months.ago + 1.day) } }
 
   before do
     documents_older_than_3_months
@@ -10,7 +10,6 @@ RSpec.describe Document, type: :request do
   end
 
   describe '.with_old_document_file' do
-
     it 'returns all documents that have been created more than 3 months ago' do
       expect(Document.older_than_3_months).to match_array documents_older_than_3_months
     end
@@ -21,7 +20,6 @@ RSpec.describe Document, type: :request do
   end
 
   describe '.remove_old_files' do
-
     before do
       Document.remove_old_files
       documents_older_than_3_months.each(&:reload)

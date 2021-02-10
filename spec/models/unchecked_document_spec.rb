@@ -200,8 +200,16 @@ RSpec.describe UncheckedDocument, type: :model do
   end
 
   describe 'old_files_removable' do
-    let(:unchecked_documents_older_than_3_months) { 3.times.map { create(:unchecked_document, created_at: 3.months.ago) } }
-    let(:unchecked_documents_newer_than_3_months) { 4.times.map { create(:unchecked_document, created_at: 3.months.ago - 1.day) } }
+    let(:unchecked_documents_older_than_3_months) do
+      3.times.map do
+        create(:unchecked_document, created_at: 3.months.ago.to_date - 1.day)
+      end
+    end
+    let(:unchecked_documents_newer_than_3_months) do
+      4.times.map do
+        create(:unchecked_document, created_at: 3.months.ago + 1.day)
+      end
+    end
 
     before do
       unchecked_documents_older_than_3_months
@@ -209,7 +217,6 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     describe '.with_old_document_file' do
-
       it 'returns all documents that have been created more than 3 months ago' do
         expect(UncheckedDocument.older_than_3_months).to match_array unchecked_documents_older_than_3_months
       end
@@ -220,7 +227,6 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     describe '.remove_old_files' do
-
       before do
         UncheckedDocument.remove_old_files
         unchecked_documents_older_than_3_months.each(&:reload)
