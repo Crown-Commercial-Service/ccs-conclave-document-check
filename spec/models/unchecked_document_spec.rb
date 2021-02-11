@@ -29,6 +29,153 @@ RSpec.describe UncheckedDocument, type: :model do
       it 'does not update document clamav_message' do
         expect(unchecked_document.document.clamav_message.blank?).to eq(true)
       end
+
+      context 'when file is jpg' do
+        let(:mime_type) { 'image/jpeg' }
+        let(:file_name) { 'test_jpg.jpg' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is jpeg' do
+        let(:mime_type) { 'image/jpeg' }
+        let(:file_name) { 'test_jpeg.jpeg' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is bmp' do
+        let(:mime_type) { 'image/bmp' }
+        let(:file_name) { 'test_bmp.bmp' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is png' do
+        let(:mime_type) { 'image/png' }
+        let(:file_name) { 'test_png.png' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is tif' do
+        let(:mime_type) { 'image/tiff' }
+        let(:file_name) { 'test_tif.tif' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is tiff' do
+        let(:mime_type) { 'image/tiff' }
+        let(:file_name) { 'test_tiff.tiff' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is eps' do
+        let(:mime_type) { 'application/eps' }
+        let(:file_name) { 'test_eps.eps' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
     end
 
     context 'when unsafe' do
