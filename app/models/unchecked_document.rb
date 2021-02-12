@@ -1,4 +1,6 @@
 class UncheckedDocument < ApplicationRecord
+  include OldFilesRemovable
+
   belongs_to :document
   belongs_to :client
 

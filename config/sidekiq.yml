@@ -1,2 +1,6 @@
 ---
 :concurrency:  2
+:schedule:
+  FileRemovalWorker:
+    every: ['24h', first_in: '0s']
+    class: FileRemovalWorker
