@@ -58,6 +58,27 @@ RSpec.describe UncheckedDocument, type: :model do
         end
       end
 
+      context 'when file is doc' do
+        let(:mime_type) { 'application/msword' }
+        let(:file_name) { 'test_doc.doc' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
       context 'when file is csv' do
         let(:mime_type) { 'text/csv' }
         let(:file_name) { 'test_csv.csv' }
@@ -81,7 +102,29 @@ RSpec.describe UncheckedDocument, type: :model do
 
       context 'when file is xlsx' do
         let(:mime_type) { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
-        let(:file_name) { 'test_docx.docx' }
+        let(:file_name) { 'test_xlsx.xlsx' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is xls' do
+        let(:mime_type) { 'application/vnd.ms-excel' }
+        let(:file_name) { 'test_xls.xls' }
+
         it 'changes document state to safe' do
           expect(unchecked_document.document.state).to eq 'safe'
         end
