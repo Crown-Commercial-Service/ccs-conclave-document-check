@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Document, type: :request do
-  let(:documents_older_than_3_months) { 3.times.map { create(:document, created_at: 3.months.ago) } }
-  let(:documents_newer_than_3_months) { 4.times.map { create(:document, created_at: 3.months.ago - 1.day) } }
+  let(:documents_older_than_3_months) { 3.times.map { create(:document, created_at: 3.months.ago.to_date - 1.day) } }
+  let(:documents_newer_than_3_months) { 4.times.map { create(:document, created_at: 3.months.ago + 1.day) } }
 
   before do
     documents_older_than_3_months
