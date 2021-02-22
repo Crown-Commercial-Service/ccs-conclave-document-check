@@ -46,3 +46,7 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'lib/virus_scanner.rb'
+
+Metrics/AbcSize:
+    Exclude:
+        - 'app/uploaders/document_file_uploader.rb'
