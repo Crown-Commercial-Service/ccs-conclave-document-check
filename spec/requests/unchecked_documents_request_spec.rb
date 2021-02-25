@@ -14,9 +14,16 @@ RSpec.describe 'UncheckedDocuments', type: :request do
 
   describe 'check' do
     context 'when success' do
-      it 'returns status code 200' do
+      before do
         put '/document-check', params: { unchecked_document_id: unchecked_document.id }, headers: headers
+      end
+
+      it 'returns status code 200' do
         expect(response).to have_http_status(200)
+      end
+
+      it 'calls the virus scanning worker' do
+        expect(VirusScanningWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
       end
     end
 
@@ -36,12 +43,17 @@ RSpec.describe 'UncheckedDocuments', type: :request do
       end
     end
 
-    context 'when document does not exist' do
-      let(:unchecked_document) { create(:unchecked_document, document: nil, client: client) }
+    context "when unchecked document's document_file is not present" do
+      let(:unchecked_document) { create(:unchecked_document, document_file: nil, client: client) }
 
-      it 'returns status code 404' do
-        put '/document-check', params: { unchecked_document_id: 'invalid' }, headers: headers
-        expect(response).to have_http_status(404)
+      it 'returns status code 200' do
+        put '/document-check', params: { unchecked_document_id: unchecked_document.id }, headers: headers
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns does not call virus scanner' do
+        put '/document-check', params: { unchecked_document_id: unchecked_document.id }, headers: headers
+        expect(VirusScanningWorker).to_not have_enqueued_sidekiq_job(unchecked_document.id)
       end
     end
   end
