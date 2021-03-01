@@ -5,6 +5,9 @@ applications:
       - name: sidekiq
         process_types: [ 'worker' ]
         command: bundle exec sidekiq -C config/sidekiq.yml
+      - name: sidekiq-small
+        process_types: [ 'worker' ]
+        command: bundle exec sidekiq -C config/sidekiq-small-files.yml
     services:
       - ccs-conclave-document-upload-pg-service
       - ccs-conclave-document-s3-service

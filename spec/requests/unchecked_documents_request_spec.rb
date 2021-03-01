@@ -23,6 +23,26 @@ RSpec.describe 'UncheckedDocuments', type: :request do
       end
 
       it 'calls the virus scanning worker' do
+        expect(VirusScanningSmallWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
+      end
+    end
+
+    context 'when file is larger than 50mb' do
+      let(:unchecked_document) do
+        create(:unchecked_document,
+               client: client,
+               document_file: fixture_file_upload('spec/fixtures/test_doc_50MB.doc', 'application/msword'))
+      end
+
+      before do
+        put '/document-check', params: { unchecked_document_id: unchecked_document.id }, headers: headers
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'calls the virus scanning worker' do
         expect(VirusScanningWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
       end
     end

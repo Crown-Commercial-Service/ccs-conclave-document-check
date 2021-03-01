@@ -7,7 +7,10 @@ class UncheckedDocumentsController < ApplicationController
     unchecked_document = UncheckedDocument.find_by(id: unchecked_document_params[:unchecked_document_id])
 
     if unchecked_document&.document
-      VirusScanningWorker.perform_async(unchecked_document.id) if unchecked_document.document_file.file.try(:exists?)
+      if unchecked_document.document_file.file.try(:exists?)
+        run_virus_scanner(unchecked_document.id,
+                          unchecked_document.document_file.file.size)
+      end
       render json: unchecked_document.document.to_json, status: :ok
     else
       render status: :not_found
@@ -24,6 +27,14 @@ class UncheckedDocumentsController < ApplicationController
     authenticate_or_request_with_http_basic do |source_app, api_key|
       @client = Client.find_by(source_app: source_app)
       @client && @client.api_key == api_key
+    end
+  end
+
+  def run_virus_scanner(unchecked_document_id, file_size)
+    if file_size.to_f / (1000 * 1000) > UncheckedDocument::LARGE_FILE_SIZE_IN_MB
+      VirusScanningWorker.perform_async(unchecked_document_id)
+    else
+      VirusScanningSmallWorker.perform_async(unchecked_document_id)
     end
   end
 end
