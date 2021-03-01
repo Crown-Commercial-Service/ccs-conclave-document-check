@@ -669,4 +669,22 @@ RSpec.describe UncheckedDocument, type: :model do
       end
     end
   end
+
+  describe 'db constraints' do
+    let(:unchecked_document) { create(:unchecked_document) }
+
+    context 'when document does not exist' do
+      it 'does  raise an error' do
+        unchecked_document.document = nil
+        expect { unchecked_document.save(validate: false) }.to raise_error(ActiveRecord::NotNullViolation)
+      end
+    end
+
+    context 'when document does not exist' do
+      it 'does not raise an error' do
+        unchecked_document.document = create(:document)
+        expect { unchecked_document.save(validate: false) }.to_not raise_error(ActiveRecord::NotNullViolation)
+      end
+    end
+  end
 end

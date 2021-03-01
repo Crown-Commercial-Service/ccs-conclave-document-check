@@ -30,7 +30,7 @@ class VirusScanner
 
   def log_safe
     @document.state = 'safe'
-    @document.save
+    @document.save(validate: false)
     remove_unchecked_document_file
   end
 
@@ -51,6 +51,6 @@ class VirusScanner
 
   def remove_unchecked_document_file
     @unchecked_document.remove_document_file!
-    @unchecked_document.save
+    @unchecked_document.save(validate: false)
   end
 end
