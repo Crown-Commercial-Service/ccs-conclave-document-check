@@ -1,6 +1,8 @@
 class UncheckedDocument < ApplicationRecord
   include OldFilesRemovable
 
+  MIN_LARGE_FILE_SIZE = 50.megabytes
+
   belongs_to :document
   belongs_to :client
 
