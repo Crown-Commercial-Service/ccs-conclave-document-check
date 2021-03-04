@@ -23,6 +23,31 @@ RSpec.describe 'UncheckedDocuments', type: :request do
       end
 
       it 'calls the virus scanning worker' do
+        expect(VirusScanningSmallWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
+      end
+    end
+
+    context 'when file is larger than 50mb' do
+      let(:file) do
+        double(:file,
+               size: UncheckedDocument::MIN_LARGE_FILE_SIZE + 1,
+               content_type: 'png',
+               original_filename: 'test_png',
+               exists?: true)
+      end
+      let(:document_file) { double(:document_file) }
+
+      before do
+        allow_any_instance_of(UncheckedDocument).to receive(:document_file).and_return(document_file)
+        allow(document_file).to receive(:file).and_return(file)
+        put '/document-check', params: { unchecked_document_id: unchecked_document.id }, headers: headers
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'calls the virus scanning worker' do
         expect(VirusScanningWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
       end
     end
