@@ -22,35 +22,48 @@ This is a Ruby on Rails application that takes a unchecked_document_id and runs 
 
 `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
-##### 2. Install rbenv
+##### 3. Install rbenv
 
 `brew update`
 `brew install rbenv`
 `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
 `source ~/.bash_profile`
 
-##### 3. Build ruby 2.7.2 with rbenv
+##### 4. Build ruby 2.7.2 with rbenv
 
 `rbenv install 2.7.2`
 `rbenv global 2.7.2`
 
-##### 4. Install rails 6.0.3
+##### 5. Install rails 6.0.3
+
 `gem install rails -v 6.0.3`
 
-#### 5. Download and install Postgresql 10
+##### 6. Download and install Postgresql 10
+
 Go to https://www.postgresql.org/ and download the installer
 
-#### 6. Install redis
+##### 7. Install redis
+
 `brew install redis`
 
-#### 7. Create and migrate the database
+##### 8. Create and migrate the database
+
 `rake db:create && rake db:migrate`
+
+##### 9. Setup ClamAV, freshclam and run clamd
+
+Setup instructions can be found here: https://www.clamav.net/documents/installing-clamav
+
+To run clamd:
+
+`/usr/local/sbin/clamd --foreground=yes`
 
 ### Running the application
 
 From your console run redis-server, sidekiq and the rails server:
 `redis-server`
-`bundle exec sidekiq`
+`bundle exec sidekiq -C config/sidekiq.yml`
+`bundle exec sidekiq -C config/sidekiq-small-files.yml`
 `rails s`
 
 You can now use the service by sending a PUT request to: `localhost:3000/document-check`
