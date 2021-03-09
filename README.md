@@ -50,7 +50,8 @@ Go to https://www.postgresql.org/ and download the installer
 
 From your console run redis-server, sidekiq and the rails server:
 `redis-server`
-`bundle exec sidekiq`
+`bundle exec sidekiq -C config/sidekiq.yml`
+`bundle exec sidekiq -C config/sidekiq-small-files.yml`
 `rails s`
 
 You can now use the service by sending a PUT request to: `localhost:3000/document-check`
