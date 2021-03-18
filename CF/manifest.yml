@@ -13,7 +13,7 @@ applications:
       - ccs-conclave-document-s3-service
       - ccs-conclave-document-upload-redis-service
       - API_ROLLBAR
-    memory: 256M
+    memory: MEMORY_LIMIT
     buildpacks:
       - https://github.com/Crown-Commercial-Service/ccs-conclave-document-clamav-buildpack.git
       - https://github.com/cloudfoundry/ruby-buildpack.git
