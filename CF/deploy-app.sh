@@ -85,7 +85,7 @@ then
     fi
   fi
   
-  if [[ "$CF_SPACE" == "prodouction" ]]
+  if [[ "$CF_SPACE" == "production" ]]
   then
     if [[ ! "$BRANCH" == "main" ]]
     then
