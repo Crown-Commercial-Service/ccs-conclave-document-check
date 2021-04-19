@@ -456,6 +456,48 @@ RSpec.describe UncheckedDocument, type: :model do
           expect(unchecked_document.document.clamav_message.blank?).to eq(true)
         end
       end
+
+      context 'when file is larger than 50mb' do
+        let(:file) do
+          double(:file,
+                 size: UncheckedDocument::MIN_LARGE_FILE_SIZE + 1,
+                 content_type: 'png',
+                 original_filename: 'test_png',
+                 exists?: true)
+        end
+        let(:document_file) { double(:document_file) }
+
+        before do
+          allow_any_instance_of(UncheckedDocument).to receive(:document_file).and_return(document_file)
+          allow(document_file).to receive(:file).and_return(file)
+        end
+
+        it 'calls the virus scanning worker' do
+          unchecked_document.run_virus_scan_worker
+          expect(VirusScanningWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
+        end
+      end
+
+      context 'when file is smaller than 50mb' do
+        let(:file) do
+          double(:file,
+                 size: UncheckedDocument::MIN_LARGE_FILE_SIZE - 1,
+                 content_type: 'png',
+                 original_filename: 'test_png',
+                 exists?: true)
+        end
+        let(:document_file) { double(:document_file) }
+
+        before do
+          allow_any_instance_of(UncheckedDocument).to receive(:document_file).and_return(document_file)
+          allow(document_file).to receive(:file).and_return(file)
+        end
+
+        it 'runs the small file virus scan worker' do
+          unchecked_document.run_virus_scan_worker
+          expect(VirusScanningSmallWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
+        end
+      end
     end
 
     context 'when unsafe' do
