@@ -7,8 +7,8 @@ RSpec.describe 'UncheckedDocuments', type: :request do
   let(:headers) do
     {
       'ACCEPT' => 'application/json',
-      'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
-                                                                                             client.api_key)
+      'x-api-key' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
+                                                                                    client.api_key)
     }
   end
 
