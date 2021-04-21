@@ -3,7 +3,10 @@ class UncheckedDocumentsController < ApplicationController
     unchecked_document = UncheckedDocument.find_by(id: unchecked_document_params[:unchecked_document_id])
 
     if unchecked_document&.document
-      unchecked_document.run_virus_scan_worker
+      if unchecked_document.document_file.file.try(:exists?)
+        run_virus_scanner(unchecked_document.id,
+                          unchecked_document.document_file.file.size)
+      end
       render json: unchecked_document.document.to_json, status: :ok
     else
       render status: :not_found
@@ -14,5 +17,13 @@ class UncheckedDocumentsController < ApplicationController
 
   def unchecked_document_params
     params.permit(:unchecked_document_id)
+  end
+
+  def run_virus_scanner(unchecked_document_id, file_size)
+    if file_size > UncheckedDocument::MIN_LARGE_FILE_SIZE
+      VirusScanningWorker.perform_async(unchecked_document_id)
+    else
+      VirusScanningSmallWorker.perform_async(unchecked_document_id)
+    end
   end
 end
