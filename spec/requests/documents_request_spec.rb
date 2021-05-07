@@ -63,7 +63,7 @@ RSpec.describe 'Documents', type: :request do
 
     context 'when unchecked document cannot be found' do
       it 'returns status code 404' do
-        put "/documents/invalid", headers: headers
+        put '/documents/invalid', headers: headers
         expect(response).to have_http_status(404)
       end
     end
