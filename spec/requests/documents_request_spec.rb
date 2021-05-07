@@ -15,8 +15,7 @@ RSpec.describe 'Documents', type: :request do
   describe 'check' do
     context 'when success' do
       before do
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: unchecked_document.id } }, headers: headers
+        put "/documents/#{unchecked_document.document_id}", headers: headers
       end
 
       it 'returns status code 200' do
@@ -41,8 +40,7 @@ RSpec.describe 'Documents', type: :request do
       before do
         allow_any_instance_of(UncheckedDocument).to receive(:document_file).and_return(document_file)
         allow(document_file).to receive(:file).and_return(file)
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: unchecked_document.id } }, headers: headers
+        put "/documents/#{unchecked_document.document_id}", headers: headers
       end
 
       it 'returns status code 200' do
@@ -58,16 +56,14 @@ RSpec.describe 'Documents', type: :request do
       let(:unchecked_document) { create(:unchecked_document) }
 
       it 'returns status code 401' do
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: unchecked_document.id } }
+        put "/documents/#{unchecked_document.document_id}"
         expect(response).to have_http_status(401)
       end
     end
 
     context 'when unchecked document cannot be found' do
       it 'returns status code 404' do
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: 'invalid' } }, headers: headers
+        put "/documents/invalid", headers: headers
         expect(response).to have_http_status(404)
       end
     end
@@ -76,14 +72,12 @@ RSpec.describe 'Documents', type: :request do
       let(:unchecked_document) { create(:unchecked_document, document_file: nil, client: client) }
 
       it 'returns status code 200' do
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: unchecked_document.id } }, headers: headers
+        put "/documents/#{unchecked_document.document_id}", headers: headers
         expect(response).to have_http_status(200)
       end
 
       it 'returns does not call virus scanner' do
-        put "/documents/#{unchecked_document.document_id}",
-            params: { document: { unchecked_document_id: unchecked_document.id } }, headers: headers
+        put "/documents/#{unchecked_document.document_id}", headers: headers
         expect(VirusScanningWorker).to_not have_enqueued_sidekiq_job(unchecked_document.id)
       end
     end
