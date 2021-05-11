@@ -14,7 +14,7 @@ class VirusScanner
   def scan
     return unless @document.state == 'processing'
 
-    log_safe if @document.valid?
+    log_safe_valid_doc
   rescue Clamby::FileNotFound => e
     log_missing(e.message)
     raise e
@@ -28,9 +28,11 @@ class VirusScanner
 
   private
 
-  def log_safe
+  def log_safe_valid_doc
+    return unless @document.valid?
+
     @document.state = 'safe'
-    @document.save
+    @document.save(validate: false)
     remove_unchecked_document_file
   end
 
@@ -51,6 +53,6 @@ class VirusScanner
 
   def remove_unchecked_document_file
     @unchecked_document.remove_document_file!
-    @unchecked_document.save
+    @unchecked_document.save(validate: false)
   end
 end
