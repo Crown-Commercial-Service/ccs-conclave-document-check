@@ -66,7 +66,7 @@ From your console run redis-server, sidekiq and the rails server:
 `bundle exec sidekiq -C config/sidekiq-small-files.yml`
 `rails s`
 
-You can now use the service by sending a PUT request to: `localhost:3000/document-check`
+You can now use the service by sending a PUT request to: `localhost:3000/documents/:id`
 
 ### Running the test suite
 
