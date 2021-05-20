@@ -20,7 +20,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'carrierwave-aws', '~> 1.3.0'
 
 # Helps you manage translations
-gem 'i18n-tasks', '~> 0.9.31'
+gem 'i18n-tasks', '~> 0.9.34'
 
 # for clamav
 gem 'ratonvirus', '>= 0.1.1'
@@ -46,7 +46,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # Rspec
-  gem 'rspec-rails', '~> 4.0.1'
+  gem 'rspec-rails', '~> 4.0.2'
 end
 
 group :development do
