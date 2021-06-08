@@ -130,12 +130,12 @@ echo "SCRIPT PATH:::::::"
 echo "$SCRIPT_PATH"
 
 echo "ls -l ::::::::::"
-echo ls -l 
+echo $(ls -l) 
 
 cd .. || exit
 
 echo "pwd::::::::"
-echo pwd
+echo $(pwd)
 
 # deploy
 cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
