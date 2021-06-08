@@ -123,12 +123,12 @@ cd .. || exit
 echo "pwd::::::::"
 echo $(pwd)
 
-echo "ls -l ::::::::::"
-echo $(ls -l) 
+# echo "ls -l ::::::::::"
+# echo $(ls -l) 
 
 # generate clamd.conf
 cd config/antivirus/
-file="test_clamd.conf"
+file="clamd.conf"
 echo TCPAddr ccs-conclave-document-clamav-"$CF_SPACE".apps.internal > $file
 echo TCPSocket 3310 >> $file
 echo FollowDirectorySymlinks true >> $file
@@ -137,6 +137,8 @@ cat $file
 
 echo "ls -l ::::::::::"
 echo $(ls -l) 
+
+cd ../..
 
 # deploy
 cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
