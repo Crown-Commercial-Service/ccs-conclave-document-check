@@ -145,7 +145,7 @@ cat $file
 echo "ls ::::::::::"
 echo $(ls) 
 
-cd ../../.. || exit
+cd ../.. || exit
 
 echo "pwd::::::::"
 echo $(pwd)
