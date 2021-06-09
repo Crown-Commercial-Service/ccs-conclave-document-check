@@ -118,13 +118,11 @@ cf target -o "$CF_ORG" -s "$CF_SPACE"
 # generate manifest
 sed "s/CF_SPACE/$CF_SPACE/g" manifest.yml | sed "s/MEMORY_LIMIT/$MEMORY_LIMIT/g" > "$CF_SPACE.manifest.yml"
 
-cd .. || exit
-
 echo "pwd::::::::"
 echo $(pwd)
 
-# echo "ls -l ::::::::::"
-# echo $(ls -l) 
+echo "ls ::::::::::"
+echo $(ls)
 
 # generate clamd.conf
 cd config/antivirus/
@@ -135,10 +133,13 @@ echo FollowDirectorySymlinks true >> $file
 echo FollowFileSymlinks true >> $file
 cat $file
 
-echo "ls -l ::::::::::"
-echo $(ls -l) 
+echo "ls ::::::::::"
+echo $(ls) 
 
-cd ../..
+cd ../../.. || exit
+
+echo "pwd::::::::"
+echo $(pwd)
 
 # deploy
 cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
