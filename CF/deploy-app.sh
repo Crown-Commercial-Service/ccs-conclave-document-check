@@ -127,6 +127,9 @@ echo $(ls)
 cd ..
 echo "ls ::::::::::"
 echo $(ls)
+cd config/
+echo "ls ::::::::::"
+echo $(ls)
 
 # generate clamd.conf
 cd config/antivirus/
