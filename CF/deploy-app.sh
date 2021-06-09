@@ -118,7 +118,19 @@ cf target -o "$CF_ORG" -s "$CF_SPACE"
 # generate manifest
 sed "s/CF_SPACE/$CF_SPACE/g" manifest.yml | sed "s/MEMORY_LIMIT/$MEMORY_LIMIT/g" > "$CF_SPACE.manifest.yml"
 
-cd .. || exit
+cd ../config/
+mkdir antivirus
+cd antivirus/
+
+# generate clamd.conf
+file="clamd.conf"
+echo TCPAddr ccs-conclave-document-clamav-"$CF_SPACE".apps.internal > $file
+echo TCPSocket 3310 >> $file
+echo FollowDirectorySymlinks true >> $file
+echo FollowFileSymlinks true >> $file
+cat $file
+
+cd ../.. || exit
 
 # deploy
 cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
