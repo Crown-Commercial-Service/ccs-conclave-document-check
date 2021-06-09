@@ -128,11 +128,13 @@ cd ..
 echo "ls ::::::::::"
 echo $(ls)
 cd config/
-echo "ls ::::::::::"
-echo $(ls)
+mkdir antivirus
+cd antivirus/
+echo "pwd::::::::"
+echo $(pwd)
 
 # generate clamd.conf
-cd config/antivirus/
+# cd config/antivirus/
 file="clamd.conf"
 echo TCPAddr ccs-conclave-document-clamav-"$CF_SPACE".apps.internal > $file
 echo TCPSocket 3310 >> $file
