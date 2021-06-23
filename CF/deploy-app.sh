@@ -61,7 +61,7 @@ then
 fi
 BRANCH=$(git symbolic-ref --short HEAD)
 echo "INFO: deploying $BRANCH to $CF_SPACE"
-release_branch_re='^release/.*'
+# release_branch_re='^release/.*'
 if [[ ! "$FORCE" == "yes" ]]
 then
 
@@ -85,9 +85,9 @@ then
     fi
   fi
 
-  if [[ "$CF_SPACE" == "preprod" ]]
+  if [[ "$CF_SPACE" == "pre-production" ]]
   then
-    if [[ ! "$BRANCH" == $release_branch_re ]]
+    if [[ ! "$BRANCH" == "preprod" ]]
     then
       echo "We only deploy 'release/*' branches to $CF_SPACE"
       echo "if you want to deploy $BRANCH to $CF_SPACE use -f"
@@ -133,4 +133,4 @@ cat $file
 cd ../.. || exit
 
 # deploy
-cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
+cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml
