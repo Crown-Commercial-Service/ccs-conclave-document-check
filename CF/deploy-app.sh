@@ -133,4 +133,4 @@ cat $file
 cd ../.. || exit
 
 # deploy
-cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml --strategy rolling
+cf push ccs-conclave-document-check -f CF/"$CF_SPACE".manifest.yml
