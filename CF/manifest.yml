@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: ccs-conclave-document-check
+  - name: CF_SPACE-cccs-conclave-document-check
     sidecars:
       - name: sidekiq
         process_types: [ 'worker' ]
