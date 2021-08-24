@@ -27,7 +27,7 @@ gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 
 # Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 5.0.0.rc1'
+gem 'sidekiq', '~> 6.2.1.0'
 
 gem 'sidekiq-scheduler', '~> 3.0.1'
 
@@ -65,7 +65,7 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'webmock', '>= 3.10.0'
-  gem 'rspec-sidekiq'
+  gem 'rspec-sidekiq', '>= 3.1.0'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
 end
