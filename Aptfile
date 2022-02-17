@@ -1,0 +1,6 @@
+# Aptfile
+# This file lists the required apt packages.  These are installed by the document-upload-buildpack-apt buildpack
+
+# Antivirus
+clamav
+clamav-daemon

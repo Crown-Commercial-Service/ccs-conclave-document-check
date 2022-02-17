@@ -1,0 +1,9 @@
+---
+:concurrency:  5
+:queues:
+  - default
+  - large_files
+:schedule:
+  FileRemovalWorker:
+    every: ['24h', first_in: '0s']
+    class: FileRemovalWorker

@@ -26,14 +26,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore rubymine files
+# Ignore .idea folder created by Rubymine
 .idea/*
 
-# Ignore public uploads
+# Ignore files uploaded by carrierwave
 /public/uploads/*
-
-# Ignore sidekiq file
-dump.rdb
-
-# Ignore test artifacts
-coverage
