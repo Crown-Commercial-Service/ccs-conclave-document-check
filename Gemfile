@@ -20,7 +20,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'carrierwave-aws', '~> 1.3.0'
 
 # Helps you manage translations
-gem 'i18n-tasks', '~> 0.9.35'
+gem 'i18n-tasks', '~> 0.9.37'
 
 # for clamav
 gem 'ratonvirus', '>= 0.1.1'
