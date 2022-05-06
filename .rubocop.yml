@@ -9,7 +9,7 @@ AllCops:
     - 'db/seeds.rb'
     - 'bin/**/*'
     - 'config/initializers/carrierwave.rb'
-    - 'config/initializers/cf_vault.rb'
+    - 'config/initializers/aws_ssm.rb'
     - 'config/initializers/redis.rb'
     - 'config/puma.rb'
 
