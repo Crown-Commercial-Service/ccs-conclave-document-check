@@ -457,6 +457,153 @@ RSpec.describe UncheckedDocument, type: :model do
         end
       end
 
+      context 'when file is txt' do
+        let(:mime_type) { 'text/plain' }
+        let(:file_name) { 'test_txt.txt' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is xml' do
+        let(:mime_type) { 'application/xml' }
+        let(:file_name) { 'test_xml.xml' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is rtf' do
+        let(:mime_type) { 'application/rtf' }
+        let(:file_name) { 'test_rtf.rtf' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is ppt' do
+        let(:mime_type) { 'application/vnd.ms-powerpoint' }
+        let(:file_name) { 'test_ppt.ppt' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is pptx' do
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }
+        let(:file_name) { 'test_pptx.pptx' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is kml' do
+        let(:mime_type) { 'application/vnd' }
+        let(:file_name) { 'test_kml.kml' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is rdf' do
+        let(:mime_type) { 'application/rdf+xml' }
+        let(:file_name) { 'test_rdf.rdf' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
       context 'when file is larger than 50mb' do
         let(:file) do
           double(:file,
