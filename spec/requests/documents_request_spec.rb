@@ -2,17 +2,33 @@ require 'rails_helper'
 
 RSpec.describe 'Documents', type: :request do
   let(:client) { create(:client, source_app: 'doc_upload') }
+  let(:clientid) { ENV['CLIENT_ID'] }
+  let(:jwt_token) { JWT.encode({ aud: ENV['CLIENT_ID'] }, 'test') }
   let(:unchecked_document) { create(:unchecked_document, client: client) }
 
   let(:headers) do
     {
       'ACCEPT' => 'application/json',
-      'x-api-key' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
-                                                                                    client.api_key)
+      'x-api-key' => client.api_key,
+      'Authorization' => "Bearer #{jwt_token}"
     }
   end
 
   describe 'check' do
+    before do
+      stub_request(:post, "http://www.test.com/security/tokens/validation?client-id=#{clientid}")
+        .with(
+          headers: {
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization' => "Bearer #{jwt_token}",
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'User-Agent' => 'Ruby'
+          }
+        )
+        .to_return(status: 200, body: 'true', headers: {})
+    end
+
     context 'when success' do
       before do
         put "/documents/#{unchecked_document.document_id}", headers: headers

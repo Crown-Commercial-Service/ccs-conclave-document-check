@@ -139,6 +139,8 @@ GEM
     faraday_middleware (1.2.0)
       faraday (~> 1.0)
     ffi (1.14.2)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -146,6 +148,9 @@ GEM
       activesupport (>= 5.0)
     hashdiff (1.0.1)
     highline (2.0.3)
+    httparty (0.18.1)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     i18n-tasks (0.9.37)
@@ -343,6 +348,8 @@ DEPENDENCIES
   faraday
   faraday-http-cache
   faraday_middleware
+  figaro (~> 1.2.0)
+  httparty (~> 0.18.1)
   i18n-tasks (~> 0.9.37)
   jwt
   listen (~> 3.2)

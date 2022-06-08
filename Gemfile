@@ -25,6 +25,15 @@ gem 'carrierwave-aws', '~> 1.3.0'
 # Helps you manage translations
 gem 'i18n-tasks', '~> 0.9.37'
 
+# Make http requests
+gem 'httparty', '~> 0.18.1'
+
+# Manage secret keys on local
+gem 'figaro', '~> 1.2.0'
+
+# Handle json web tokens
+gem 'jwt'
+
 # for clamav
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'

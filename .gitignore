@@ -40,3 +40,6 @@ dump.rdb
 
 # Ignore test artifacts
 coverage
+
+# Ignore application configuration
+/config/application.yml
