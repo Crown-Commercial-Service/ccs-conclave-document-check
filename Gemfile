@@ -30,7 +30,7 @@ gem 'ratonvirus', '>= 0.2.0'
 gem 'ratonvirus-clamby', '>= 0.2.0'
 
 # Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 6.4.0'
+gem 'sidekiq', '~> 7.0.0'
 
 gem 'sidekiq-scheduler', '~> 3.0.1'
 
