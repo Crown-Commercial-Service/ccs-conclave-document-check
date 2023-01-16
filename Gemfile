@@ -30,7 +30,7 @@ gem 'ratonvirus', '>= 0.2.0'
 gem 'ratonvirus-clamby', '>= 0.2.0'
 
 # Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 6.4.0'
+gem 'sidekiq', '~> 7.0.0'
 
 gem 'sidekiq-scheduler', '~> 3.0.1'
 
@@ -42,7 +42,7 @@ gem 'vault', '~> 0.15.0'
 
 # static code analyzer
 gem 'rubocop', '>= 1.7.0', require: false
-gem 'rubocop-rails', '>= 2.15.2', require: false
+gem 'rubocop-rails', '>= 2.17.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
