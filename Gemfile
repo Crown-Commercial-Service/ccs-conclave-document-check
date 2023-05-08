@@ -26,8 +26,8 @@ gem 'carrierwave-aws', '~> 1.3.0'
 gem 'i18n-tasks', '~> 0.9.37'
 
 # for clamav
-gem 'ratonvirus', '>= 0.2.0'
-gem 'ratonvirus-clamby', '>= 0.2.0'
+gem 'ratonvirus', '>= 0.3.2'
+gem 'ratonvirus-clamby', '>= 0.3.0'
 
 # Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 6.4.0'
