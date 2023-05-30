@@ -29,10 +29,16 @@ gem 'i18n-tasks', '~> 0.9.37'
 gem 'ratonvirus', '>= 0.2.0'
 gem 'ratonvirus-clamby', '>= 0.2.0'
 
-# Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 6.4.2'
 
-gem 'sidekiq-scheduler', '~> 3.0.1'
+
+# Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
+# Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
+gem 'sidekiq', '~> 6.5.6'
+
+# Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
+gem 'sidekiq-scheduler', '~> 3.2.2'
+
+
 
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
