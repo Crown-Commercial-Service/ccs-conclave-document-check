@@ -651,7 +651,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
         end
 
@@ -663,7 +664,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
           @unchecked_document.run_virus_scan
         rescue Clamby::VirusDetected
@@ -712,7 +714,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
         end
 
@@ -724,7 +727,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
           @unchecked_document.run_virus_scan
         rescue Clamby::FileNotFound
@@ -754,7 +758,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
         end
 
@@ -766,7 +771,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
           @unchecked_document.run_virus_scan
         rescue Clamby::ClamscanMissing
