@@ -7,7 +7,7 @@ RSpec.describe 'DocumentFileUploader' do
   let(:mime_type) { 'text/pdf' }
   let(:file_name) { 'test_pdf.pdf' }
   let(:unchecked_document) do
-    create(:unchecked_document, document_file: fixture_file_upload(file_name, mime_type))
+    create(:unchecked_document, document_file: Rack::Test::UploadedFile.new("spec/fixtures/#{file_name}", mime_type))
   end
   let(:uploader) { DocumentFileUploader.new(unchecked_document, document_file) }
   let(:development_store_dir_path) do
