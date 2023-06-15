@@ -29,10 +29,10 @@ This is a Ruby on Rails application that takes a unchecked_document_id and runs 
 `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
 `source ~/.bash_profile`
 
-##### 4. Build ruby 2.7.3 with rbenv
+##### 4. Build ruby 3.0.3 with rbenv
 
-`rbenv install 2.7.3`
-`rbenv global 2.7.3`
+`rbenv install 3.0.3`
+`rbenv global 3.0.3`
 
 ##### 5. Install rails 6.0.3
 
