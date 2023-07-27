@@ -5,7 +5,9 @@ if Rails.env.test? || Rails.env.development?
                      error_clamscan_missing: true,
                      error_file_missing: true,
                      error_file_virus: true,
-                     output_level: 'high'
+                     output_level: 'high',
+                     config_file: 'needs/a/path' # When running tests via docker-compose.built.yml
+                     # it needs a dummy config file path or else it fails due to no file path
                    })
 elsif ENV['AWS_NATIVE'] == 'true'
   Clamby.configure({
