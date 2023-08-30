@@ -119,7 +119,11 @@ cf target -o "$CF_ORG" -s "$CF_SPACE"
 sed "s/CF_SPACE/$CF_SPACE/g" manifest.yml | sed "s/MEMORY_LIMIT/$MEMORY_LIMIT/g" > "$CF_SPACE.manifest.yml"
 
 cd ../config/
-mkdir antivirus
+
+if [ ! -d "antivirus" ]; then
+    mkdir antivirus
+fi
+
 cd antivirus/
 
 # generate clamd.conf
