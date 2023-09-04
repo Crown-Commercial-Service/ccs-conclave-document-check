@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine AS build
+FROM ruby:3.0.3-alpine AS base
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN gem install bundler && bundle install --jobs 4 --retry 5
 
 FROM ruby:3.0.3-alpine
 
-COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=base /usr/local/bundle /usr/local/bundle
 
 COPY . .
 
