@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine AS stage-1
+FROM ruby:3.0.3-alpine AS build
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN gem install bundler && bundle install --jobs 4 --retry 5
 
 FROM ruby:3.0.3-alpine
 
-COPY --from=stage-1 /usr/local/bundle /usr/local/bundle
+COPY --from=build /usr/local/bundle /usr/local/bundle
 
 COPY . .
 
