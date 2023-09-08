@@ -105,11 +105,11 @@ spec:
             #PRE_PROD_ECR- --output
             #PRE_PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/checker:TAG_PLACEHOLDER,push=true
             #PROD_ECR- --output
-            #PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/checker:TAG_PLACEHOLDER,push=true
+            #PROD_ECR- type=image,name=PRODUCTION.dkr.ecr.eu-west-2.amazonaws.com/checker:TAG_PLACEHOLDER,push=true
             - --export-cache
-            - type=local,mode=max,dest=/cache/conclave-document-check
+            - type=local,mode=max,dest=/cache/conclave-document-check-checker
             - --import-cache
-            - type=local,src=/cache/conclave-document-check
+            - type=local,src=/cache/conclave-document-check-checker
             # TODO: Implement per-branch caching as per https://docs.docker.com/build/cache/backends/#multiple-caches
             # - --import-cache
             # - type=local,src=/cache/conclave-document-check-REF_PLACEHOLDER
@@ -157,7 +157,7 @@ spec:
         - name: buildkit
           persistentVolumeClaim:
             claimName: PVC_PLACEHOLDER
-        # EFS volume for the local buildkit cache. Retained
+        # EFS volume for the local buildkit cache. Retained.
         - name: buildkit-cache
           persistentVolumeClaim:
             claimName: buildkit-cache
