@@ -44,7 +44,7 @@ gem 'vault', '~> 0.15.0'
 
 # static code analyzer
 gem 'rubocop', '>= 1.7.0', require: false
-gem 'rubocop-rails', '>= 2.20.0', require: false
+gem 'rubocop-rails', '>= 2.21.1', require: false
 
 # datadog agent
 gem 'ddtrace', require: 'ddtrace/auto_instrument'
