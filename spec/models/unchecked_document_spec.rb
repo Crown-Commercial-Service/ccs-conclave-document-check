@@ -5,7 +5,7 @@ RSpec.describe UncheckedDocument, type: :model do
     let(:mime_type) { 'text/pdf' }
     let(:file_name) { 'test_pdf.pdf' }
     let(:unchecked_document) do
-      create(:unchecked_document, document_file: fixture_file_upload(file_name, mime_type))
+      create(:unchecked_document, document_file: Rack::Test::UploadedFile.new("spec/fixtures/#{file_name}", mime_type))
     end
 
     context 'when safe' do
@@ -457,6 +457,153 @@ RSpec.describe UncheckedDocument, type: :model do
         end
       end
 
+      context 'when file is txt' do
+        let(:mime_type) { 'text/plain' }
+        let(:file_name) { 'test_txt.txt' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is xml' do
+        let(:mime_type) { 'application/xml' }
+        let(:file_name) { 'test_xml.xml' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is rtf' do
+        let(:mime_type) { 'application/rtf' }
+        let(:file_name) { 'test_rtf.rtf' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is ppt' do
+        let(:mime_type) { 'application/vnd.ms-powerpoint' }
+        let(:file_name) { 'test_ppt.ppt' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is pptx' do
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }
+        let(:file_name) { 'test_pptx.pptx' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is kml' do
+        let(:mime_type) { 'application/vnd' }
+        let(:file_name) { 'test_kml.kml' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
+      context 'when file is rdf' do
+        let(:mime_type) { 'application/rdf+xml' }
+        let(:file_name) { 'test_rdf.rdf' }
+
+        it 'changes document state to safe' do
+          expect(unchecked_document.document.state).to eq 'safe'
+        end
+
+        it 'saves the file onto the document record' do
+          expect(unchecked_document.document.document_file.file.present?).to eq(true)
+        end
+
+        it 'removes the file' do
+          expect(unchecked_document.document_file.present?).to eq(false)
+        end
+
+        it 'does not update document clamav_message' do
+          expect(unchecked_document.document.clamav_message.blank?).to eq(true)
+        end
+      end
+
       context 'when file is larger than 50mb' do
         let(:file) do
           double(:file,
@@ -504,7 +651,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
         end
 
@@ -516,7 +664,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::VirusDetected)
           @unchecked_document.run_virus_scan
         rescue Clamby::VirusDetected
@@ -565,7 +714,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
         end
 
@@ -577,7 +727,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::FileNotFound)
           @unchecked_document.run_virus_scan
         rescue Clamby::FileNotFound
@@ -607,7 +758,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'when the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
         end
 
@@ -619,7 +771,8 @@ RSpec.describe UncheckedDocument, type: :model do
       context 'after the scan runs' do
         before do
           @unchecked_document = create(:unchecked_document,
-                                       document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'))
+                                       document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf',
+                                                                                   'text/pdf'))
           allow_any_instance_of(Document).to receive(:valid?).and_raise(Clamby::ClamscanMissing)
           @unchecked_document.run_virus_scan
         rescue Clamby::ClamscanMissing
