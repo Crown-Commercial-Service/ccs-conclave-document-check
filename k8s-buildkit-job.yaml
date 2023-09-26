@@ -164,7 +164,7 @@ spec:
             claimName: buildkit-cache
         - name: docker-config
           configMap:
-            name: ecr-login-document-check
+            name: buildkit-docker-config
         - name: local-bin
           emptyDir: {}
         - name: repo
