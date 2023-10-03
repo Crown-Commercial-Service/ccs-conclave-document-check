@@ -1,15 +1,15 @@
-FROM ruby:3.0.3-alpine AS base
+FROM ruby:3.0.3
 
 WORKDIR /app
 
-RUN apk add --update build-base nodejs clamav clamav-daemon libpq-dev
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  nodejs \
+  clamav \
+  clamav-daemon
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs 4 --retry 5
-
-FROM ruby:3.0.3-alpine
-
-COPY --from=base /usr/local/bundle /usr/local/bundle
+RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 COPY . .
 
