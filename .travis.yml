@@ -1,4 +1,4 @@
-dist: bionic
+dist: jammy
 language: ruby
 rvm:
 - 3.0.3
@@ -6,11 +6,11 @@ services:
 - postgresql
 - redis-server
 addons:
-  postgresql: '10'
+  postgresql: '13'
   apt:
     packages:
-    - postgresql-10
-    - postgresql-client-10
+    - postgresql-13
+    - postgresql-client-13
 cache:
   - bundler
 env:
