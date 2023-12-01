@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine
+FROM 473251818902.dkr.ecr.eu-west-2.amazonaws.com/ruby:3.0.3-alpine
 WORKDIR /app
 RUN apk upgrade && apk add build-base clamav clamav-daemon curl libpq-dev nodejs
 COPY Gemfile Gemfile.lock ./
