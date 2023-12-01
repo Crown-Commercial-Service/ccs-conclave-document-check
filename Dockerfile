@@ -2,7 +2,7 @@ FROM ruby:3.0.3-alpine AS base
 
 WORKDIR /app
 
-RUN apk add --update build-base nodejs clamav clamav-daemon libpq-dev
+RUN apk add --update build-base nodejs clamav clamav-daemon libpq-dev curl
 
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 4 --retry 5
