@@ -1,6 +1,6 @@
 FROM public.ecr.aws/docker/library/ruby:3.0.3-alpine AS base
 WORKDIR /app
-RUN apk --no-cache add build-base clamav clamav-daemon libpq-dev nodejs
+RUN apk --no-cache add build-base libpq-dev
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 4 --retry 5
 
