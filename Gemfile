@@ -43,8 +43,8 @@ gem 'rollbar', '~> 3.1.1'
 gem 'vault', '~> 0.15.0'
 
 # static code analyzer
-gem 'rubocop', '>= 1.7.0', require: false
-gem 'rubocop-rails', '>= 2.20.0', require: false
+gem 'rubocop', '>= 1.56.4', require: false
+gem 'rubocop-rails', '>= 2.21.2', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -69,7 +69,7 @@ group :test do
   gem 'shoulda-matchers', '~> 4.5.0'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock', '>= 3.10.0'
+  gem 'webmock', '>= 3.20.0'
   gem 'rspec-sidekiq', '>= 4.0.0'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
