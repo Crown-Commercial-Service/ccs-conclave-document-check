@@ -34,7 +34,7 @@ gem 'ratonvirus-clamby', '>= 0.3.0'
 gem 'sidekiq', '~> 6.5.6'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
-gem 'sidekiq-scheduler', '~> 3.2.2'
+gem 'sidekiq-scheduler', '~> 4.0.0'
 
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
