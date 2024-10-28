@@ -43,7 +43,7 @@ gem 'rollbar', '~> 3.1.1'
 gem 'vault', '~> 0.15.0'
 
 # static code analyzer
-gem 'rubocop', '>= 1.7.0', require: false
+gem 'rubocop', '>= 1.66.0', require: false
 gem 'rubocop-rails', '>= 2.20.0', require: false
 
 group :development, :test do
