@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.3.3'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', '>= 7.2.2.2', github: 'rails/rails'
 gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -23,7 +23,7 @@ gem 'bootsnap', require: false
 gem 'carrierwave-aws'
 
 # Helps you manage translations
-gem 'i18n-tasks'
+gem 'i18n-tasks', '>= 1.0.15'
 
 # for clamav
 gem 'ratonvirus'
@@ -31,10 +31,10 @@ gem 'ratonvirus-clamby'
 
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
-gem 'sidekiq', '~> 6.5.6'
+gem 'sidekiq', '~> 7.0.0'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
-gem 'sidekiq-scheduler', '~> 3.2.2'
+gem 'sidekiq-scheduler', '~> 4.0.0'
 
 # Exception tracking
 gem 'rollbar'
@@ -44,14 +44,14 @@ gem 'vault'
 
 # static code analyzer
 gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
+gem 'rubocop-rails', '>= 2.30.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # Rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 8.0.0'
 end
 
 group :development do
@@ -65,12 +65,12 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 
 group :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.5.0'
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
   gem 'webmock'
-  gem 'rspec-sidekiq'
+  gem 'rspec-sidekiq', '>= 5.1.0'
   gem 'simplecov', require: false
   gem 'climate_control'
 end
