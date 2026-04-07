@@ -20,7 +20,7 @@ gem 'bootsnap', require: false
 # gem 'rack-cors'
 
 # for S3 storage of files
-gem 'carrierwave-aws'
+gem 'carrierwave-aws', '>= 1.6.1'
 
 # Helps you manage translations
 gem 'i18n-tasks'
@@ -69,7 +69,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock'
+  gem 'webmock', '>= 3.25.1'
   gem 'rspec-sidekiq'
   gem 'simplecov', require: false
   gem 'climate_control'
