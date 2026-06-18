@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports: [5432:5432]
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: conclave_test
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      clamav:
+        image: clamav/clamav:latest
+        ports: [3310:3310]
+        options: >-
+          --health-cmd "clamdscan --version" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/conclave_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+      - name: Set up database
+        run: |
+          bin/rails db:create db:schema:load --trace
+      - name: Run tests
+        run: bundle exec rspec
