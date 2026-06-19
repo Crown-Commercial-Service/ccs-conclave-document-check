@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.4.4'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', '>= 8.0.0', github: 'rails/rails'
 gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -23,7 +23,7 @@ gem 'bootsnap', require: false
 gem 'carrierwave-aws', '>= 1.6.1'
 
 # Helps you manage translations
-gem 'i18n-tasks'
+gem 'i18n-tasks', '>= 1.0.15'
 
 # for clamav
 gem 'ratonvirus'
@@ -51,7 +51,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # Rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 8.0.0'
 end
 
 group :development do
@@ -65,7 +65,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 
 group :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.5.0'
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
